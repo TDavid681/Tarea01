@@ -1,0 +1,204 @@
+# VERSIÓN 2: CON CLASES / POO (Tema 3)
+from datetime import datetime
+# 1. Definición del Molde (Clase)
+class Tramite:
+    def __init__(self, codigo, fecha, tipo, dni, nombre, area, estado):
+        self.codigo = codigo
+        self.fecha = fecha
+        self.tipo = tipo
+        self.dni = dni
+        self.nombre = nombre
+        self.area = area
+        self.estado = estado
+
+# 2. Definición del Gestor que administra la lista de objetos
+class GestorTramites:
+    def __init__(self):
+        # TEMA 3.1: Lista que almacenará OBJETOS Tramite[cite: 127]
+        self.lista_tramites = [] 
+
+    def registrar(self, rol):
+        if rol == "archivo":
+            print("\n[X] Acceso denegado.")
+            return
+            
+        codigo_num = len(self.lista_tramites) + 1
+        dni = input("Ingrese DNI (8 dígitos obligatorios): ")
+        while len(dni) != 8:
+            print("[X] Error: El DNI debe tener exactamente 8 dígitos.")
+            dni = input("Ingrese DNI (8 dígitos obligatorios): ")
+            nombre = input("Ingrese Nombres y Apellidos: ")
+        while nombre == "":
+            print("[X] Error: Todos los campos son obligatorios.")
+            nombre = input("Ingrese Nombres y Apellidos: ")
+        print("\nTipos de trámite disponibles:")
+        print(f" - Referencia")
+        print(f" - SIS")
+        print(f" - Certificado_Salud")
+        print(f" - Descanso_Medico")
+        tipo = input("Escriba el tipo de trámite de la lista: ")
+        while tipo == "":
+            print("[X] Error: Todos los campos son obligatorios.")
+            tipo = input("Escriba el tipo de trámite de la lista: ")
+        fecha_actual = datetime.now().strftime("%d/%m/%Y")
+        # TEMA 3.2: Creación del objeto e inserción en la lista[cite: 126]
+        nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, "Jefatura", "Registrado")
+        self.lista_tramites.append(nuevo_tramite)
+        print("\n========================================")
+        print("          CARGO DE RECEPCION            ")
+        print("========================================")
+        print(f" Codigo de Tramite : {codigo_num}")
+        print(f" Fecha de Ingreso  : {fecha_actual}")
+        print(f" Solicitante       : {nombre}")
+        print(f" DNI Ciudadano     : {dni}")
+        print(f" Tipo de Tramite   : {tipo}")
+        print(f" Estado Actual     : Registrado")
+        print(f" Area Asignada     : Jefatura")
+        print(f" Plazo Estimado    : 3 a 7 dias habiles")
+        print("========================================")
+        print(f" [OK] Tramite {codigo_num} registrado con exito.")
+
+    def buscar_secuencialmente(self, cod_buscado):
+        # TEMA 3.2: Búsqueda de objetos en la lista[cite: 126]
+        for i in range(len(self.lista_tramites)):
+            if self.lista_tramites[i].codigo == cod_buscado:
+                return i
+        return -1
+
+    def consultar(self):
+        buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
+        pos = self.buscar_secuencialmente(buscado)
+        
+        if pos != -1:
+            t = self.lista_tramites[pos]
+            print("\n--- TRAMITE ENCONTRADO ---")
+            # Observa cómo usamos .nombre o .area en vez de corchetes [4] o [5]
+            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
+            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
+        else:
+            print("[X] Codigo no encontrado.")
+
+    def cambiar_estado(self, rol):
+        if rol != "jefatura":
+            print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
+            return
+            
+        actualizar = int(input("Ingrese el codigo NUMÉRICO a modificar: "))
+        pos = self.buscar_secuencialmente(actualizar)
+        
+        if pos != -1:
+            nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+            while nuevo_estado == "":
+                print("[X] Error: Todos los campos son obligatorios.")
+                nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+            nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
+            while nueva_area == "":
+                print("[X] Error: Todos los campos son obligatorios.")
+                nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
+            
+            # TEMA 3.2: Modificación directa de los atributos del objeto[cite: 126]
+            self.lista_tramites[pos].estado = nuevo_estado
+            self.lista_tramites[pos].area = nueva_area
+            print("\n[OK] Tramite actualizado.")
+        else:
+            print("[X] Codigo no encontrado.")
+    def ordenar_por_nombre_burbuja(self):
+        # TEMA 3.3: Algoritmo de ordenamiento (Burbuja)
+        n = len(self.lista_tramites)
+        if n == 0:
+            print("\n[!] No hay trámites para ordenar.")
+            return
+            
+        for i in range(n - 1):
+            for j in range(n - 1 - i):
+                # Comparamos alfabéticamente los nombres
+                if self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre:
+                    # Intercambio de objetos
+                    self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
+                    
+        print("\n[OK] La lista ha sido ordenada alfabéticamente por nombre (Método Burbuja).")
+    def mostrar_matriz_bidimensional(self):
+        # TEMA 3.3: Mostrar la lista como matriz bidimensional
+        n = len(self.lista_tramites)
+        if n == 0:
+            print("\n[!] No hay trámites para mostrar en la matriz.")
+            return
+    # 1. Creación e inicialización del arreglo bidimensional (Matriz)
+        matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO"]]
+        
+        for t in self.lista_tramites:
+            fila = [t.codigo, t.dni, t.nombre, t.area, t.estado]
+            matriz.append(fila)
+            
+        print("\n--- MATRIZ BIDIMENSIONAL DE TRÁMITES ---")
+        # 2. Recorrido de la matriz bidimensional usando índices anidados
+        for f in range(len(matriz)):
+            fila_str = ""
+            for c in range(len(matriz[f])):
+                # Formateamos con espacios para que se vea como tabla
+                fila_str += f"{str(matriz[f][c]):<15}" 
+            print(fila_str)
+            if f == 0:
+                print("-" * 75)
+    def reporte_archivo(self):
+        print("\n--- REPORTE DE ARCHIVO ---")
+        contador = 0
+        for t in self.lista_tramites:
+            if t.area == "Archivo":
+                contador += 1
+                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado}")
+        print(f"Total en Archivo: {contador}")
+    def eliminar(self, rol):
+        # TEMA 3.2: Eliminación
+        if rol != "jefatura":
+            print("\n[X] Acceso denegado: Solo Jefatura puede eliminar.")
+            return
+            
+        cod = int(input("Ingrese el código NUMÉRICO a eliminar: "))
+        pos = self.buscar_secuencialmente(cod)
+        
+        if pos != -1:
+            tramite_eliminado = self.lista_tramites.pop(pos)
+            print(f"\n[OK] Trámite {tramite_eliminado.codigo} de '{tramite_eliminado.nombre}' eliminado correctamente.")
+        else:
+            print("[X] Código no encontrado.")
+
+# 3. Flujo Principal del Programa
+def main():
+    gestor = GestorTramites()
+    
+    activo = True
+    while activo:
+        print("\n=== AUTENTICACION ===")
+        print(" [1] Ventanilla \n [2] Jefatura \n [3] Archivo \n [4] Salir")
+        opcion_rol = input("Elija una opcion: ")
+        
+        if opcion_rol == "1": rol = "ventanilla"
+        elif opcion_rol == "2": rol = "jefatura"
+        elif opcion_rol == "3": rol = "archivo"
+        elif opcion_rol == "4": break
+        else: continue
+            
+        sesion = True
+        while sesion:
+         print(f"\n--- MENU PRINCIPAL [{rol.upper()}] ---")
+         print(" 1. Registrar \n 2. Consultar \n 3. Modificar (Solo Jefatura) \n 4. Eliminar (Solo Jefatura)")
+         print(" 5. Ordenar por Nombre (Burbuja) \n 6. Ver Matriz Bidimensional")
+         print(" 7. Reporte Archivo \n 8. Cerrar sesion \n 9. Apagar sistema")
+            
+        menu = input("Elija (1-9): ")
+            
+        if menu == "1": gestor.registrar(rol)
+        elif menu == "2": gestor.consultar()
+        elif menu == "3": gestor.cambiar_estado(rol)
+        elif menu == "4": gestor.eliminar(rol)
+        elif menu == "5": gestor.ordenar_por_nombre_burbuja()
+        elif menu == "6": gestor.mostrar_matriz_bidimensional()
+        elif menu == "7": gestor.reporte_archivo()
+        elif menu == "8": sesion = False
+        elif menu == "9": 
+                sesion = False
+                activo = False
+
+if __name__ == "__main__":
+    main()
