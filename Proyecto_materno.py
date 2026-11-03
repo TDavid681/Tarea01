@@ -24,27 +24,34 @@ class GestorTramites:
         return
             
       codigo_num = len(self.lista_tramites) + 1
+      
       dni = input("Ingrese DNI (8 dígitos obligatorios): ")
       while len(dni) != 8:
         print("[X] Error: El DNI debe tener exactamente 8 dígitos.")
         dni = input("Ingrese DNI (8 dígitos obligatorios): ")
-        nombre = input("Ingrese Nombres y Apellidos: ")
+        
+      nombre = input("Ingrese Nombres y Apellidos: ")
       while nombre == "":
         print("[X] Error: Todos los campos son obligatorios.")
         nombre = input("Ingrese Nombres y Apellidos: ")
+        
       print("\nTipos de trámite disponibles:")
       print(f" - Referencia")
       print(f" - SIS")
       print(f" - Certificado_Salud")
       print(f" - Descanso_Medico")
       tipo = input("Escriba el tipo de trámite de la lista: ")
+      
       while tipo == "":
         print("[X] Error: Todos los campos son obligatorios.")
         tipo = input("Escriba el tipo de trámite de la lista: ")
+        
       fecha_actual = datetime.now().strftime("%d/%m/%Y")
-    # TEMA 3.2: Creación del objeto e inserción en la lista[cite: 126]
+      
+      # TEMA 3.2: Creación del objeto e inserción en la lista
       nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, "Jefatura", "Registrado")
       self.lista_tramites.append(nuevo_tramite)
+      
       print("\n========================================")
       print("          CARGO DE RECEPCION            ")
       print("========================================")
@@ -162,7 +169,7 @@ class GestorTramites:
         print("\n--- REPORTE DE ARCHIVO ---")
         contador = 0
         for t in self.lista_tramites:
-            if t.area() == "archivo":
+            if t.area == "archivo":
                 contador += 1
                 print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado}")
         print(f"Total en Archivo: {contador}")
