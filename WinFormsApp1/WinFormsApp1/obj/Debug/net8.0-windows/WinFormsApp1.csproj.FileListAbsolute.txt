@@ -1,0 +1,7 @@
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.Form1.resources
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.csproj.GenerateResource.cache
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.AssemblyInfoInputs.cache
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.AssemblyInfo.cs
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\UPN\Desktop\ejercicio01\Tarea01\WinFormsApp1\WinFormsApp1\obj\Debug\net8.0-windows\WinFormsApp1.sourcelink.json

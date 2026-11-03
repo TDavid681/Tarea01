@@ -1,120 +1,72 @@
+using WindowsFormsApp1;
+
 namespace WinFormsApp1
 {
     public partial class Form1 : Form
     {
+        GestorProducto gestor = new GestorProducto();
         public Form1()
         {
             InitializeComponent();
         }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Producto producto = new Producto(
+                txtCodigo.Text,
+                txtNombre.Text,
+                Convert.ToDouble(txtPrecio.Text),
+                Convert.ToInt32(txtStock.Text)
+            );
+            gestor.AgregarProducto(producto);
+            MessageBox.Show("Producto agregado correctamente");
+            Limpiar();
+        }
+        private void Limpiar()
+        {
+            txtCodigo.Clear();
+            txtNombre.Clear();
+            txtPrecio.Clear();
+            txtStock.Clear();
+        }
+
+        private void btnMostrar_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            foreach (Producto p in gestor.MostrarProducto())
+            {
+                dataGridView1.Rows.Add(
+                    p.Codigo, p.Nombre, p.Precio, p.Stock);
+            }
+        }
+
+        private void btnGuardarTxt_Click(object sender, EventArgs e)
+        {
+            gestor.GuardarTexto("productos.txt");
+            MessageBox.Show("Datos guardados correctamente en Txt");
+        }
+
+        private void btnLeerTxt_Click(object sender, EventArgs e)
+        {
+            gestor.LeerTexto("productos.txt");
+            gestor.MostrarProducto();
+            MessageBox.Show("Datos leídos correctamente desde Txt");
+        }
+
+        private void btnGuardarBin_Click(object sender, EventArgs e)
+        {
+            gestor.GuardarBinario("productos.dat");
+            MessageBox.Show("Datos guardados correctamente en Binario");
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            gestor.LeerBinario("productos.dat");
+            gestor.MostrarProducto();
+            MessageBox.Show("Datos leídos correctamente desde Binario");
+        }
     }
 }
-// ========================================================
-// DOBLE CLIC EN BOTÓN "AGREGAR"
-// ========================================================
-// private void btnAgregar_Click(object sender, EventArgs e)
-// {
-p.AgregarProducto(
-    txtNombre.Text,
-    Convert.ToDouble(txtPrecio.Text));
-MessageBox.Show("Datos Completos");
-dgvProductos.Rows.Add(
-    txtNombre.Text, txtPrecio.Text);
-txtNombre.Clear();
-txtPrecio.Clear();
-// }
 
-// ========================================================
-// DOBLE CLIC EN BOTÓN "MOSTRAR"
-// ========================================================
-// private void btnMostrar_Click(object sender, EventArgs e)
-// {
-string datos = "";
-dgvProductos.Rows.Clear();
-for (int i = 0; i < p.nombres.Count; i++)
-{
-    datos += p.nombres[i] + "S/" +
-        p.precios[i] + "\n";
-}
-MessageBox.Show(datos);
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "REPLACE"
-// ========================================================
-// private void btnReplace_Click(object sender, EventArgs e)
-// {
-p.Reemplazar(
-    txtVieja.Text,
-    txtNueva.Text
-    );
-dgvProductos.Rows.Clear();
-for (int i = 0; p.nombres.Count > 0; i++)
-{
-    dgvProductos.Rows.Add(
-        p.nombres, p.precios);
-}
-MessageBox.Show("Palabra reemplazada");
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "BUSCAR PALABRA"
-// ========================================================
-// private void BtnBuscarPa_Click(object sender, EventArgs e)
-// {
-MessageBox.Show(p.BuscarPalabra(txtBuscar.Text));
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "BUSCAR PRODUCTO"
-// ========================================================
-// private void btnBuscarPro_Click(object sender, EventArgs e)
-// {
-int pos = p.Buscar(txtBuscar.Text);
-if (pos != -1)
-{
-    MessageBox.Show(
-        "Producto: " +
-        p.nombres[pos] +
-        "Precio: " +
-        p.precios[pos]);
-}
-else
-    MessageBox.Show("Producto no encontrado");
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "SPLIT"
-// ========================================================
-// private void btnSplit_Click(object sender, EventArgs e)
-// {
-MessageBox.Show(p.SepararPalabra());
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "SUBSTRING"
-// ========================================================
-// private void btnSubstring_Click(object sender, EventArgs e)
-// {
-MessageBox.Show(p.MostrarSubString());
-// }
-
-// ========================================================
-// DOBLE CLIC EN BOTÓN "ORDENAR"
-// ========================================================
-// private void btnOrdenar_Click(object sender, EventArgs e)
-// {
-p.Ordenar();
-dgvProductos.Rows.Clear();
-dgvProductos.Rows.Clear();
-for (int i = 0; p.nombres.Count > 0; i++)
-{
-    dgvProductos.Rows.Add(
-        p.nombres, p.precios);
-}
-MessageBox.Show("Productos ordenados");
-        // }
-    }
-
-   
     
 
